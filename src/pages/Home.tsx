@@ -4,7 +4,7 @@ import { fetchTrendingMovies, fetchPopularMovies } from '../services/api';
 
 const HomePage: React.FC = () => {
   return (
-    <div >
+    <div className='relative z-10 mt-6 px-4 max-w-6xl mx-auto'>
       <MovieSection title="Trending Movies" fetchFunction={fetchTrendingMovies} />
       <MovieSection title="Popular Movies" fetchFunction={fetchPopularMovies} />
     </div>

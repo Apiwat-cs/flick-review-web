@@ -20,7 +20,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, rating }) => {
         {/* Movie Rating */}
         {rating !== undefined && (
           <div className="absolute top-2 left-2 bg-black bg-opacity-70 text-white text-xs font-bold px-2 py-1 rounded">
-            ⭐ {rating}%
+          {rating}
           </div>
         )}
 

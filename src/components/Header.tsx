@@ -4,7 +4,7 @@ import { IoIosSearch } from 'react-icons/io';
 function Header() {
   return (
     <header className="bg-gradient-to-r from-blue-900 to-purple-900 text-white shadow-md">
-      <div className="container mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between">
+      <div className="container mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between relative z-10 max-w-6xl ">
           <div className="flex items-center gap-6">
             <Link to="/" className="text-3xl font-bold">FlickReviews</Link>
           </div>
@@ -37,7 +37,7 @@ function Header() {
                   className= "text-white hover:text-cyan-400" onClick={() => {}}
   
                 >
-                  Sign Out
+                  Log In
             </button>
           </ul>
         </nav>

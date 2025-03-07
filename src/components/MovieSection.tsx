@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Movie } from '../types/movie';
 import SectionHeader from './SectionHeader';
 import MovieCard from './MovieCard';
@@ -12,6 +12,8 @@ const MovieSection: React.FC<MovieSectionProps> = ({ title, fetchFunction }) => 
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const movieRef = useRef<HTMLDivElement | null>(null);  // ใช้ ref สำหรับอ้างอิง container ของการเลื่อน
 
   useEffect(() => {
     const getMovies = async () => {
@@ -30,6 +32,17 @@ const MovieSection: React.FC<MovieSectionProps> = ({ title, fetchFunction }) => 
 
     getMovies();
   }, [fetchFunction]);
+
+  const handleScroll = (direction: 'left' | 'right') => {
+    if (movieRef.current) {
+      const scrollAmount = 300; // ระยะการเลื่อน
+      if (direction === 'right') {
+        movieRef.current.scrollLeft += scrollAmount;
+      } else {
+        movieRef.current.scrollLeft -= scrollAmount;
+      }
+    }
+  };
 
   if (loading) {
     return (
@@ -56,10 +69,28 @@ const MovieSection: React.FC<MovieSectionProps> = ({ title, fetchFunction }) => 
   return (
     <div className="my-10 mx-4">
       <SectionHeader title={title} />
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4">
-        {movies.slice(0, 8).map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
-        ))}
+      <div className="relative">
+        <div className="flex overflow-x-auto space-x-4" ref={movieRef}>
+          {movies.slice(0, 6).map((movie) => (
+            <MovieCard key={movie.id} movie={movie} />
+          ))}
+        </div>
+        
+        {/* ปุ่มเลื่อนซ้าย */}
+        <button
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full"
+          onClick={() => handleScroll('left')}
+        >
+          &lt;
+        </button>
+
+        {/* ปุ่มเลื่อนขวา */}
+        <button
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full"
+          onClick={() => handleScroll('right')}
+        >
+          &gt;
+        </button>
       </div>
     </div>
   );
