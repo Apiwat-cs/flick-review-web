@@ -20,7 +20,7 @@ const ReviewMovie: React.FC<{ movieId: string }> = ({ movieId }) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
             ...prevData,
-            [name]: value,
+            [name]: name === "rating" ? Number(value) : value, // ✅ แก้ rating เป็น number
         }));
     };
 
@@ -28,24 +28,42 @@ const ReviewMovie: React.FC<{ movieId: string }> = ({ movieId }) => {
         e.preventDefault();
         setIsSubmitting(true);
         try {
-            const response = await axios.post(`/api/reviews/${movieId}`, formData);
+            const response = await axios.post(`http://localhost:5000/api/reviews/${movieId}`, formData);
             if (response.status === 200) {
                 setMessage("รีวิวของคุณถูกบันทึกแล้ว!");
                 setFormData({ username: "", rating: 0, review: "" });
             }
         } catch (error) {
             console.error("Error submitting review:", error);
-            setMessage("เกิดข้อผิดพลาดในการส่งรีวิว.");
+            
+            if (axios.isAxiosError(error)) {
+                if (error.response) {
+                    // Log the response data
+                    console.error("Backend Error Response:", error.response.data);
+                    setMessage(`เกิดข้อผิดพลาดในการส่งรีวิว: ${error.response.data.error || error.message}`);
+                } else if (error.request) {
+                    // Log if no response is received
+                    console.error("No response received:", error.request);
+                    setMessage("เกิดข้อผิดพลาดในการส่งรีวิว: ไม่ได้รับการตอบกลับจากเซิร์ฟเวอร์");
+                } else {
+                    // Log any other errors
+                    console.error("Request Setup Error:", error.message);
+                    setMessage(`เกิดข้อผิดพลาดในการส่งรีวิว: ${error.message}`);
+                }
+            } else {
+                // Log if the error isn't an AxiosError
+                console.error("Generic Error:", error);
+                setMessage("เกิดข้อผิดพลาดในการส่งรีวิว.");
+            }
         } finally {
             setIsSubmitting(false);
         }
-    };
+    };    
 
     return (
         <div>
             <h2 className="text-2xl font-bold">รีวิวจากผู้ใช้</h2>
             <div className="review-container max-w-xl mx-auto mt-10 p-6 border border-gray-300 rounded-md">
-
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label htmlFor="username" className="block text-sm font-semibold">ชื่อผู้ใช้</label>

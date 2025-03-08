@@ -3,7 +3,7 @@ import axios from "axios";
 import { Movie } from "../types/movie";
 import { Cast } from "../types/billedcast";
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'http://localhost:5000/api/reviews/:movieId';
 const API_KEY = "752d7dbc372a2f8e57119cba4121aa4e";
 const BASE_URL = "https://api.themoviedb.org/3";
 
@@ -78,17 +78,29 @@ export const fetchMovieCast = async (movieId: string): Promise<Cast[]> => {
 
 export const authAPI = {
   login: async (credentials: LoginCredentials): Promise<AuthResponse> => {
-    const response = await api.post<AuthResponse>('/auth/login', credentials);
-    return response.data;
-  },
-  
-  register: async (credentials: RegisterCredentials): Promise<AuthResponse> => {
-    const response = await api.post<AuthResponse>('/auth/register', credentials);
-    return response.data;
-  },
-  
-  getCurrentUser: async (): Promise<User> => {
-    const response = await api.get<User>('/auth/me');
-    return response.data;
+      try {
+          const response = await api.post<AuthResponse>('/auth/login', credentials);
+          return response.data;
+      } catch (error) {
+          if (axios.isAxiosError(error)) {
+              if (error.response) {
+                  // Backend returned an error response
+                  console.error("Login failed:", error.response.data);
+                  throw new Error(error.response.data.message || "Login failed");
+              } else if (error.request) {
+                  // Request was made but no response was received
+                  console.error("Login failed: No response from server");
+                  throw new Error("Login failed: No response from server");
+              } else {
+                  // Something happened in setting up the request
+                  console.error("Login failed:", error.message);
+                  throw new Error("Login failed: " + error.message);
+              }
+          } else {
+              // Generic error
+              console.error("Login failed:", error);
+              throw new Error("Login failed: " + error);
+          }
+      }
   },
 };
