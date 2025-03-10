@@ -3,14 +3,14 @@ import axios from "axios";
 import { Movie } from "../types/movie";
 import { Cast } from "../types/billedcast";
 
-const API_URL = 'http://localhost:5000/api/reviews/:movieId';
+const API_URL = 'http://localhost:5000/api';
 const API_KEY = "752d7dbc372a2f8e57119cba4121aa4e";
 const BASE_URL = "https://api.themoviedb.org/3";
 
 const api = axios.create({
   baseURL: API_URL,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
@@ -103,4 +103,53 @@ export const authAPI = {
           }
       }
   },
+};
+
+export const createReview = async (reviewData: {
+  movieId: string;
+  username: string;
+  rating: number;
+  review: string;
+}) => {
+  try {
+    const response = await api.post("/reviews", reviewData);
+    return response.data;
+  } catch (error) {
+    console.error("Error creating review:", error);
+    throw error;
+  }
+};
+
+export const getReviews = async (movieId: string) => {
+  try {
+      const response = await api.get(`/reviews?movieId=${movieId}`);
+      console.log("Reviews API response:", response.data); // เพิ่มตรงนี้
+      return response.data;
+  } catch (error) {
+      console.error("Error fetching reviews:", error);
+      throw error;
+  }
+};
+
+export const updateReview = async (reviewId: string, updatedData: {
+  rating: number;
+  review: string;
+}) => {
+  try {
+    const response = await api.put(`/reviews/${reviewId}`, updatedData);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating review:", error);
+    throw error;
+  }
+};
+
+export const deleteReview = async (reviewId: string) => {
+  try {
+    const response = await api.delete(`/reviews/${reviewId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting review:", error);
+    throw error;
+  }
 };

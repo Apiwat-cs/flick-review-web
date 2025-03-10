@@ -6,11 +6,9 @@ import MovieDetail from './components/MovieDetail';
 import Login from './pages/auth/Login';
 import React from 'react';
 import Register from './pages/auth/Register';
-import { AuthProvider } from './context/AuthContext';
 
 function App() {
   return (
-    <AuthProvider>
       <div className='bg-[#f5f5f5]'>
         <Router>
           <Header />
@@ -23,7 +21,6 @@ function App() {
           <Footer />
         </Router>
       </div>
-    </AuthProvider>
   );
 }
 
