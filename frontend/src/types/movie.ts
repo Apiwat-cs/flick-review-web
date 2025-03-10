@@ -3,6 +3,8 @@ export interface Movie {
   title: string;
   overview: string;
   poster_path: string;
-  release_date: string;
+  backdrop_path?: string;  
   vote_average: number;
+  genres: { id: number; name: string }[];
 }
+

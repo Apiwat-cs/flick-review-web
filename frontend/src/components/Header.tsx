@@ -7,7 +7,7 @@ function Header() {
 
   return (
     <header className="bg-gradient-to-r from-blue-900 to-purple-900 text-white shadow-md">
-      <div className="container mx-auto px-4 py-4 flex flex-row items-center justify-between relative z-10 max-w-6xl">
+      <div className="container mx-auto p-4 flex flex-row items-center justify-between relative z-10 max-w-6xl">
         
         {/* Logo */}
         <div className="flex items-center gap-6">
