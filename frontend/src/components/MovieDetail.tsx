@@ -94,7 +94,7 @@ const MovieDetail: React.FC = () => {
   }, [movieId]);
 
   if (isLoading) {
-    return <div className="text-center text-black">กำลังโหลด...</div>;
+    return <div className="text-center text-white">กำลังโหลด...</div>;
   }
 
   if (error) {
@@ -102,11 +102,11 @@ const MovieDetail: React.FC = () => {
   }
 
   if (!movie) {
-    return <div className="text-center text-black">ไม่พบข้อมูลภาพยนตร์</div>;
+    return <div className="text-center text-white">ไม่พบข้อมูลภาพยนตร์</div>;
   }
 
   return (
-    <div className="relative w-full min-h-screen text-black">
+    <div className="relative w-full min-h-screen text-white">
       {/* Background Image */}
       <div
         className="absolute top-0 left-0 w-full h-[450px] bg-cover bg-center opacity-40"
@@ -124,17 +124,17 @@ const MovieDetail: React.FC = () => {
 
         {/* Movie Info */}
         <div className="sm:ml-8 mt-10 sm:mt-0 flex-1 ">
-          <h1 className="text-4xl font-bold">{movie.title}</h1>
+          <h1 className="text-4xl font-bold text-white">{movie.title}</h1>
 
           <div className="mt-4 flex items-center space-x-4">
             <div className="w-15 h-8 flex items-center justify-center bg-gradient-to-r from-blue-900 to-purple-900 text-white font-bold rounded-lg shadow-md">
               {userReviewAverage ? userReviewAverage.toFixed(1) : "0.0"}/10
             </div>
-            <span className="text-black font-semibold">คะแนนของผู้ใช้</span>
+            <span className="text-white font-semibold">คะแนนของผู้ใช้</span>
           </div>
 
           <h2 className="mt-4 text-xl font-bold">ภาพรวม</h2>
-          <p className="mt-2 text-black text-mg">{movie.overview}</p>
+          <p className="mt-2 text-white text-mg">{movie.overview}</p>
 
           <div className="mt-4">
             {movie.genres.map((genre) => (

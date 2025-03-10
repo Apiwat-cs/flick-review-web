@@ -35,7 +35,7 @@ const MovieSection: React.FC<MovieSectionProps> = ({ title, fetchFunction }) => 
       <div className="mb-12">
         <h2 className="text-2xl font-bold mr-4">{title}</h2>
         <div className="flex justify-center items-center h-64">
-          <p className="text-black">กำลังโหลดข้อมูล...</p>
+          <p className="text-white">กำลังโหลดข้อมูล...</p>
         </div>
       </div>
     );
@@ -54,7 +54,7 @@ const MovieSection: React.FC<MovieSectionProps> = ({ title, fetchFunction }) => 
 
   return (
       <div className="relative z-10 mt-6 px-4 max-w-6xl mx-auto">
-        <h2 className="text-2xl font-bold mr-4">{title}</h2>
+        <h2 className="text-2xl font-bold mr-4 text-white">{title}</h2>
         <div className="flex overflow-x-scroll space-x-5 mt-4 ">
           {movies.length > 0 ? (
             movies.map((movie) => (
@@ -63,7 +63,7 @@ const MovieSection: React.FC<MovieSectionProps> = ({ title, fetchFunction }) => 
               </div>
             ))
           ) : (
-            <div className="text-black">ไม่มีรายการ</div>
+            <div className="text-white">ไม่มีรายการ</div>
           )}
         </div>
       </div>

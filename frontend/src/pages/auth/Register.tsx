@@ -70,7 +70,7 @@ const Register = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="min-h-screen flex items-center justify-center bg-[1a1a1a]">
             <div className="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-md">
                 <div className="text-center">
                     <h2 className="mt-6 text-3xl font-extrabold text-gray-900">ลงทะเบียน</h2>

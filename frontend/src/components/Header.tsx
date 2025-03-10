@@ -6,7 +6,7 @@ function Header() {
   const navigate = useNavigate(); // ใช้ Hook นำทาง
 
   return (
-    <header className="bg-gradient-to-r from-blue-900 to-purple-900 text-white shadow-md">
+    <header className="bg-gradient-to-r from-slate-800 via-purple-900 to-slate-800  text-white shadow-md">
       <div className="container mx-auto p-4 flex flex-row items-center justify-between relative z-10 max-w-6xl">
         
         {/* Logo */}

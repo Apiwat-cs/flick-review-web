@@ -9,7 +9,7 @@ import Register from './pages/auth/Register';
 
 function App() {
   return (
-      <div className='bg-[#f5f5f5]'>
+      <div className='bg-[#1a1a1a]'>
         <Router>
           <Header />
           <Routes>

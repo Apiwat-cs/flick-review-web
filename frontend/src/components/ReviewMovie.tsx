@@ -234,7 +234,7 @@ const ReviewMovie: React.FC<ReviewMovieProps> = ({ movieId }) => {
 
         {/* Empty State */}
         {!isLoading && !error && reviews.length === 0 && (
-          <div className="bg-gray-100 p-8 rounded-lg text-center">
+          <div className="bg-[#efefef] p-8 rounded-lg text-center">
             <h3 className="text-xl font-medium text-gray-700">ยังไม่มีรีวิว</h3>
             <p className="mt-2 text-gray-600">เป็นคนแรกที่แสดงความคิดเห็นสำหรับภาพยนตร์เรื่องนี้</p>
           </div>
@@ -244,10 +244,10 @@ const ReviewMovie: React.FC<ReviewMovieProps> = ({ movieId }) => {
         {!isLoading && !error && reviews.length > 0 && (
           <div className="space-y-6">
             {reviews.map((review) => (
-              <div key={review._id} className="bg-white rounded-lg shadow-md p-5 border border-gray-100 ">
+              <div key={review._id} className="bg-[#efefef] rounded-lg shadow-md p-5 border border-gray-100 ">
                 <div className="flex justify-between items-start mb-3">
                   <div>
-                    <h3 className="font-bold text-lg">{review.username}</h3>
+                    <h3 className="font-bold text-lg text-black">{review.username}</h3>
                     <div className="flex items-center space-x-1 mt-1">
                       {renderReviewStars(review.rating)}
                       <span className="ml-2 text-gray-600">
@@ -281,9 +281,9 @@ const ReviewMovie: React.FC<ReviewMovieProps> = ({ movieId }) => {
       </div>
       
       {/* Review Form */}
-      <form onSubmit={handleSubmit} className="flex flex-col space-y-6 mt-8 px-6 max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-6">
+      <form onSubmit={handleSubmit} className="flex flex-col space-y-6 mt-8 px-6 max-w-3xl mx-auto bg-[#efefef] rounded-xl shadow-lg p-6">
         <div>
-          <label htmlFor="username" className="block font-semibold text-lg mb-2">ชื่อผู้ใช้</label>
+          <label htmlFor="username" className="block font-semibold text-lg mb-2 text-black">ชื่อผู้ใช้</label>
           <input
             type="text"
             id="username"
@@ -292,20 +292,20 @@ const ReviewMovie: React.FC<ReviewMovieProps> = ({ movieId }) => {
             onChange={handleInputChange}
             required
             placeholder="กรุณาใส่ชื่อของคุณ"
-            className="w-full p-3 rounded-lg border border-gray-300 bg-gray-50 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition duration-200"
+            className="w-full p-3 rounded-lg border text-black border-gray-300 bg-gray-50 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition duration-200"
           />
         </div>
         
         <div>
-          <label htmlFor="rating" className="block font-semibold text-lg mb-2">ให้คะแนน</label>
+          <label htmlFor="rating" className="block font-semibold text-lg mb-2 text-black">ให้คะแนน</label>
           <div className="flex items-center mb-2">
             {renderFormStars()}
-            <span className="ml-3 text-xl font-bold">{reviewData.rating}/10</span>
+            <span className="ml-3 text-xl font-bold text-black">{reviewData.rating}/10</span>
           </div>
         </div>
         
         <div>
-          <label htmlFor="review" className="block font-semibold text-lg mb-2">เขียนรีวิว</label>
+          <label htmlFor="review" className="block font-semibold text-lg mb-2 text-black">เขียนรีวิว</label>
           <textarea
             id="review"
             name="review"
@@ -313,7 +313,7 @@ const ReviewMovie: React.FC<ReviewMovieProps> = ({ movieId }) => {
             onChange={handleInputChange}
             required
             placeholder="แชร์ความคิดเห็นของคุณเกี่ยวกับภาพยนตร์เรื่องนี้..."
-            className="w-full p-3 rounded-lg border border-gray-300 bg-gray-50 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition duration-200"
+            className="w-full p-3 rounded-lg border text-black border-gray-300 bg-gray-50 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition duration-200"
             rows={5}
           />
         </div>
