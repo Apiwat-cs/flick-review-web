@@ -3,7 +3,7 @@ import { IoIosSearch } from 'react-icons/io';
 import React from 'react';
 
 function Header() {
-  const navigate = useNavigate(); // ใช้ Hook นำทาง
+  const navigate = useNavigate(); 
 
   return (
     <header className="bg-gradient-to-r from-slate-800 via-purple-900 to-slate-800  text-white shadow-md">

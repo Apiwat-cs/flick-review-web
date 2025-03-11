@@ -141,16 +141,16 @@ const ReviewMovie: React.FC<ReviewMovieProps> = ({ movieId }) => {
     }
   
     try {
-      setIsEditingOrDeleting(true); // Set loading state
-      await deleteReview(reviewId); // ส่ง reviewId ไปยัง backend
+      setIsEditingOrDeleting(true); 
+      await deleteReview(reviewId); 
       setMessage("ลบรีวิวสำเร็จ");
       setMessageType('success');
-      fetchReviews(); // ดึงรีวิวใหม่หลังจากลบ
+      fetchReviews(); 
     } catch (error) {
       setMessage("ไม่สามารถลบรีวิวได้");
       setMessageType('error');
     } finally {
-      setIsEditingOrDeleting(false); // Reset loading state
+      setIsEditingOrDeleting(false); 
     }
   };
 

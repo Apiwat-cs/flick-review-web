@@ -13,7 +13,7 @@ const Slider: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const swiperRef = useRef<any>(null);
 
-  // ดึงข้อมูลจาก fetchPopularMovies แทนการใช้ fetch โดยตรง
+  // ดึงข้อมูลจาก fetchPopularMovies 
   useEffect(() => {
     const getMovies = async () => {
       setIsLoading(true);

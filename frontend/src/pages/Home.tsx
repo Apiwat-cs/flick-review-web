@@ -1,6 +1,5 @@
 import React from 'react';
 import MovieSection from '../components/MovieSection';
-import Slider from '../components/Slider';
 import { fetchTrendingMovies, fetchPopularMovies } from '../services/api';
 import MovieSlider from '../components/Slider';
 

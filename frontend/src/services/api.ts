@@ -84,20 +84,16 @@ export const authAPI = {
       } catch (error) {
           if (axios.isAxiosError(error)) {
               if (error.response) {
-                  // Backend returned an error response
                   console.error("Login failed:", error.response.data);
                   throw new Error(error.response.data.message || "Login failed");
               } else if (error.request) {
-                  // Request was made but no response was received
                   console.error("Login failed: No response from server");
                   throw new Error("Login failed: No response from server");
               } else {
-                  // Something happened in setting up the request
                   console.error("Login failed:", error.message);
                   throw new Error("Login failed: " + error.message);
               }
           } else {
-              // Generic error
               console.error("Login failed:", error);
               throw new Error("Login failed: " + error);
           }
