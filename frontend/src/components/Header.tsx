@@ -24,7 +24,7 @@ function Header() {
             onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
             type="text"
             className="bg-transparent outline-0 flex-1"
-            placeholder="Search"
+            placeholder="ค้นหา"
           />
           <IoIosSearch size={20} className="text-white cursor-pointer " />
         </div>

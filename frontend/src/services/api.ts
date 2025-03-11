@@ -119,7 +119,7 @@ export const createReview = async (reviewData: {
 export const getReviews = async (movieId: string) => {
   try {
       const response = await api.get(`/reviews?movieId=${movieId}`);
-      console.log("Reviews API response:", response.data); // เพิ่มตรงนี้
+      console.log("Reviews API response:", response.data); 
       return response.data;
   } catch (error) {
       console.error("Error fetching reviews:", error);

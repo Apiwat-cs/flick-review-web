@@ -6,13 +6,11 @@ import reviewRoutes from "./routes/reviewRoutes.js";
 
 const app = express();
 
-// โหลดค่าแวดล้อมจาก .env
 dotenv.config();
 
-// Middleware
 app.use(cors({
-    origin: 'http://localhost:5173', // URL ของ frontend
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // อนุญาต methods ที่จำเป็น
+    origin: 'http://localhost:5173', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
     credentials: true
 }));
 app.use(express.json());
@@ -25,7 +23,7 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .catch(err => console.error("❌ MongoDB connection error:", err));
 
 // API Routes
-app.use('/api/reviews', reviewRoutes); // ใช้ routes ของรีวิว
+app.use('/api/reviews', reviewRoutes); 
 
 // API Route ตัวอย่าง
 app.get("/", (req, res) => {
