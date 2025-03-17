@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { createReview, getReviews, updateReview, deleteReview } from "../services/api";
 import { SendHorizontal, Star, Edit, Trash } from "lucide-react";
+import Swal from 'sweetalert2';
 
 interface Review {
-  _id: string; 
+  _id: string;
   movieId: string;
   username: string;
   rating: number;
@@ -25,7 +26,6 @@ const ReviewMovie: React.FC<ReviewMovieProps> = ({ movieId }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState<'success' | 'error' | ''>('');
-
   const [reviews, setReviews] = useState<Review[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -37,28 +37,28 @@ const ReviewMovie: React.FC<ReviewMovieProps> = ({ movieId }) => {
 
   const fetchReviews = async () => {
     if (!movieId) {
-        setError("ไม่พบรหัสภาพยนตร์");
-        setIsLoading(false);
-        return;
+      setError("ไม่พบรหัสภาพยนตร์");
+      setIsLoading(false);
+      return;
     }
 
     try {
-        setIsLoading(true);
-        const data = await getReviews(movieId);
-        console.log("Data from getReviews:", data);
+      setIsLoading(true);
+      const data = await getReviews(movieId);
+      console.log("Data from getReviews:", data);
 
-        if (Array.isArray(data)) {
-            setReviews(data);
-            setError(null);
-        } else {
-            console.error("Invalid data format from getReviews:", data);
-            setError("ข้อมูลรีวิวไม่ถูกต้อง");
-        }
+      if (Array.isArray(data)) {
+        setReviews(data);
+        setError(null);
+      } else {
+        console.error("Invalid data format from getReviews:", data);
+        setError("ข้อมูลรีวิวไม่ถูกต้อง");
+      }
     } catch (err) {
-        setError("ไม่สามารถโหลดรีวิวได้ โปรดลองอีกครั้งภายหลัง");
-        console.error("Error fetching reviews:", err);
+      setError("ไม่สามารถโหลดรีวิวได้ โปรดลองอีกครั้งภายหลัง");
+      console.error("Error fetching reviews:", err);
     } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -67,17 +67,17 @@ const ReviewMovie: React.FC<ReviewMovieProps> = ({ movieId }) => {
       if (!review._id) {
         throw new Error("Review ID is undefined");
       }
-  
+
       // เตรียมข้อมูลรีวิวที่ต้องการแก้ไข
       setReviewData({
         username: review.username,
         rating: review.rating,
         review: review.review,
       });
-  
+
       // ตั้งค่า ID ของรีวิวที่กำลังแก้ไข
       setEditingReviewId(review._id);
-  
+
       // รีเซ็ตข้อความแจ้งเตือน
       setMessage("");
       setMessageType("");
@@ -87,19 +87,19 @@ const ReviewMovie: React.FC<ReviewMovieProps> = ({ movieId }) => {
       console.error(error);
     }
   };
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!movieId) {
       setMessage("Movie ID is missing!");
       setMessageType('error');
       return;
     }
-    
+
     setIsSubmitting(true);
     setMessage("");
-    
+
     try {
       if (editingReviewId) {
         // แก้ไขรีวิว
@@ -115,11 +115,11 @@ const ReviewMovie: React.FC<ReviewMovieProps> = ({ movieId }) => {
         setMessage("ส่งรีวิวสำเร็จ");
         setMessageType('success');
       }
-  
+
       // รีเซ็ตฟอร์ม
       setReviewData({ username: "", rating: 1, review: "" });
       setEditingReviewId(null);
-  
+
       // ดึงรีวิวใหม่หลังจากสร้างหรือแก้ไข
       fetchReviews();
     } catch (error) {
@@ -139,18 +139,18 @@ const ReviewMovie: React.FC<ReviewMovieProps> = ({ movieId }) => {
       setMessageType('error');
       return;
     }
-  
+
     try {
-      setIsEditingOrDeleting(true); 
-      await deleteReview(reviewId); 
+      setIsEditingOrDeleting(true);
+      await deleteReview(reviewId);
       setMessage("ลบรีวิวสำเร็จ");
       setMessageType('success');
-      fetchReviews(); 
+      fetchReviews();
     } catch (error) {
       setMessage("ไม่สามารถลบรีวิวได้");
       setMessageType('error');
     } finally {
-      setIsEditingOrDeleting(false); 
+      setIsEditingOrDeleting(false);
     }
   };
 
@@ -169,16 +169,15 @@ const ReviewMovie: React.FC<ReviewMovieProps> = ({ movieId }) => {
         <button
           key={i}
           type="button"
-          onClick={() => 
+          onClick={() =>
             setReviewData(prev => ({ ...prev, rating: i }))
           }
           className="focus:outline-none"
         >
-          <Star 
-            size={24} 
-            className={`transition-colors ${
-              i <= reviewData.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'
-            } hover:text-yellow-400`}
+          <Star
+            size={24}
+            className={`transition-colors ${i <= reviewData.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'
+              } hover:text-yellow-400`}
           />
         </button>
       );
@@ -190,9 +189,9 @@ const ReviewMovie: React.FC<ReviewMovieProps> = ({ movieId }) => {
     const stars = [];
     for (let i = 1; i <= 10; i++) {
       stars.push(
-        <Star 
+        <Star
           key={i}
-          size={16} 
+          size={16}
           className={i <= rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}
         />
       );
@@ -269,9 +268,35 @@ const ReviewMovie: React.FC<ReviewMovieProps> = ({ movieId }) => {
                     <button onClick={() => handleEdit(review)} className="flex items-center space-x-1 px-3 py-1 text-black rounded-lg hover:text-blue-500">
                       <Edit size={20} />
                     </button>
-                    <button onClick={() => handleDelete(review._id)} className="flex items-center space-x-1 px-3 py-1 text-black rounded-lg hover:text-blue-500">
-                      <Trash size={20} />
+                    <button
+                      className="flex items-center space-x-1 px-3 py-1 text-black rounded-lg hover:text-blue-500"
+                      onClick={() => {
+                        Swal.fire({
+                          title: "ต้องการลบรีวิวใช่หรือไม่?",
+                          icon: "warning",
+                          showCancelButton: true,
+                          confirmButtonColor: "#388E3C",
+                          cancelButtonColor: "#df0000",
+                          confirmButtonText: "ใช่, ลบรีวิว",
+                          cancelButtonText: "ยกเลิก"
+                        }).then((result) => {
+                          if (result.isConfirmed) {
+                            handleDelete(review._id);  
+
+                            Swal.fire({
+                              title: "ลบสำเร็จ",
+                              text: `"${review.username}"`,
+                              icon: "success"
+                            });
+                          }
+                        });
+                      }}
+                    >
+                      <div >
+                        <Trash size={20} />
+                      </div>
                     </button>
+
                   </div>
                 </div>
               </div>
@@ -279,7 +304,7 @@ const ReviewMovie: React.FC<ReviewMovieProps> = ({ movieId }) => {
           </div>
         )}
       </div>
-      
+
       {/* Review Form */}
       <form onSubmit={handleSubmit} className="flex flex-col space-y-6 mt-8 px-6 max-w-3xl mx-auto bg-[#efefef] rounded-xl shadow-lg p-6">
         <div>
@@ -295,7 +320,7 @@ const ReviewMovie: React.FC<ReviewMovieProps> = ({ movieId }) => {
             className="w-full p-3 rounded-lg border text-black border-gray-300 bg-gray-50 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition duration-200"
           />
         </div>
-        
+
         <div>
           <label htmlFor="rating" className="block font-semibold text-lg mb-2 text-black">ให้คะแนน</label>
           <div className="flex items-center mb-2">
@@ -303,7 +328,7 @@ const ReviewMovie: React.FC<ReviewMovieProps> = ({ movieId }) => {
             <span className="ml-3 text-xl font-bold text-black">{reviewData.rating}/10</span>
           </div>
         </div>
-        
+
         <div>
           <label htmlFor="review" className="block font-semibold text-lg mb-2 text-black">เขียนรีวิว</label>
           <textarea
@@ -317,7 +342,7 @@ const ReviewMovie: React.FC<ReviewMovieProps> = ({ movieId }) => {
             rows={5}
           />
         </div>
-        
+
         {/* {message && (
           <div className={`text-center p-3 rounded-lg ${
             messageType === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
@@ -325,7 +350,7 @@ const ReviewMovie: React.FC<ReviewMovieProps> = ({ movieId }) => {
             {message}
           </div>
         )} */}
-        
+
         <button
           type="submit"
           disabled={isSubmitting}

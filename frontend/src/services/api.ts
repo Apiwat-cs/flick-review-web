@@ -25,6 +25,18 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+export const fetchSearchMovies = async (query: string): Promise<Movie[]> => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}`
+    );
+    return response.data.results; // เพิ่ม .results ตรงนี้
+  } catch (error) {
+    console.error('Error searching movies:', error);
+    throw error;
+  }
+};
+
 export const fetchTrendingMovies = async (): Promise<Movie[]> => {
   try {
     const response = await axios.get(`${BASE_URL}/trending/movie/day`, {

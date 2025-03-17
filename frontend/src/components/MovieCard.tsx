@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Movie } from '../types/movie';
-import React from 'react';
+import React, { useState } from 'react';
 
 interface MovieCardProps {
   movie: Movie;
@@ -21,11 +21,12 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, rating }) => {
         />
 
         {/* Movie Rating */}
-        {rating !== undefined && (
+        {rating !== undefined && rating !== null && (
           <div className="absolute top-2 left-2 bg-black bg-opacity-70 text-white text-xs font-bold px-2 py-1 rounded">
-          {rating}
+            {rating ? rating.toFixed(1) : "0.0"}
           </div>
         )}
+
 
         {/* Movie Title (Appears on Hover) */}
         <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-80 text-white text-center p-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100">

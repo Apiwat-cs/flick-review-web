@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchMovieDetails, fetchMovieCast, getReviews } from "../services/api";
 import ReviewMovie from "./ReviewMovie";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 interface Movie {
   id: number;
@@ -92,6 +93,19 @@ const MovieDetail: React.FC = () => {
 
     setIsLoading(false);
   }, [movieId]);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scrollLeft = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: -400, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: 400, behavior: 'smooth' });
+    }
+  };
 
   if (isLoading) {
     return <div className="text-center text-white">กำลังโหลด...</div>;
@@ -130,7 +144,7 @@ const MovieDetail: React.FC = () => {
             <div className="w-15 h-8 flex items-center justify-center bg-gradient-to-r from-blue-900 to-purple-900 text-white font-bold rounded-lg shadow-md">
               {userReviewAverage ? userReviewAverage.toFixed(1) : "0.0"}/10
             </div>
-            <span className="text-white font-semibold">คะแนนของผู้ใช้</span>
+            <span className="text-white font-semibold">คะแนน</span>
           </div>
 
           <h2 className="mt-4 text-xl font-bold">ภาพรวม</h2>
@@ -148,8 +162,16 @@ const MovieDetail: React.FC = () => {
 
       {/* Top Billed Cast */}
       <div className="relative z-10 mt-6 px-4 max-w-6xl mx-auto">
-        <h2 className="text-2xl font-bold">นักแสดงหลัก</h2>
-        <div className="mt-4 flex overflow-x-scroll space-x-4">
+        <h2 className="text-2xl font-bold text-white">นักแสดงหลัก</h2>
+        <button
+          onClick={scrollLeft}
+          className="absolute left-0 top-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 md:w-12 md:h-12 bg-black/50 text-white rounded-full z-20 hover:bg-red-600 transition "
+          aria-label="Scroll Left"
+        >
+          <IoIosArrowBack size={30} />
+        </button>
+        {/* รายการนักแสดง */}
+        <div ref={scrollRef} className="flex space-x-5 mt-4 overflow-hidden scroll-smooth">
           {cast.length > 0 ? (
             cast.map((actor) => (
               <div key={actor.id} className="w-40 flex-shrink-0 bg-gray-900 p-1 pt-2 rounded-lg text-center">
@@ -157,7 +179,7 @@ const MovieDetail: React.FC = () => {
                   className="w-full h-40 object-cover rounded-lg"
                   src={actor.profile_path
                     ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
-                    : "/placeholder.jpg"} 
+                    : "/placeholder.jpg"}
                   alt={actor.name}
                 />
                 <p className="mt-2 text-white font-semibold">{actor.name}</p>
@@ -165,15 +187,22 @@ const MovieDetail: React.FC = () => {
               </div>
             ))
           ) : (
-            <div className="text-black">ไม่มีรายการ</div>
+            <div className="text-white">ไม่มีรายการ</div>
           )}
         </div>
+        <button
+          onClick={scrollRight}
+          className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center justify-center  w-10 h-10 md:w-12 md:h-12 bg-black/50 text-white rounded-full z-20 hover:bg-red-600 transition "
+          aria-label="Scroll Right"
+        >
+          <IoIosArrowForward size={30} />
+        </button>
       </div>
 
       {/* Review Section */}
       <div className="relative z-10 mt-6 px-4 max-w-6xl mx-auto">
         <ReviewMovie movieId={movieId} />
-      </div>    
+      </div>
     </div>
   );
 };
